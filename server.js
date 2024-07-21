@@ -79,7 +79,7 @@ async function generateSatProblems(section, difficulty) {
   }
 }
 
-app.post('/generate-sat-problem', async (req, res) => {
+app.post("/generate-sat-problem", async (req, res) => {
   try {
     const { section, difficulty } = req.body;
 
