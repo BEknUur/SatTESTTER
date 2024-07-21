@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SAT Test Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form, .output-container {
+      margin: 20px auto;
+      max-width: 600px;
+      text-align: left;
+    }
+    label, select, button {
+      display: block;
+      margin-bottom: 10px;
+    }
+    .output-container {
+      margin-top: 20px;
+    }
+    .answer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>SAT Test Generator</h1>
+  <form id="generateForm">
+    <label for="sections">Section:</label>
+    <select id="sections">
+      <option value="math">Math</option>
+      <option value="verbal">Verbal</option>
+    </select>
+    <label for="difficulty">Difficulty:</label>
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="hard">Hard</option>
+    </select>
+    <button type="submit">Generate SAT Problems</button>
+  </form>
+
+  <button id="generatePDF">Generate PDF</button>
+  <button id="toggleAnswers">Toggle Answers</button>
+
+  <div id="questions-output" class="output-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var generateForm = document.getElementById('generateForm');
+      var pdfButton = document.getElementById('generatePDF');
+      var toggleAnswersButton = document.getElementById('toggleAnswers');
+
+      if (generateForm) {
+        generateForm.addEventListener('submit', function (event) {
+          event.preventDefault(); // Prevent the default form submission
+
+          var section = document.getElementById('sections').value;
+          var difficulty = document.getElementById('difficulty').value;
+
+          fetch('/generate-sat-problem', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ section: section, difficulty: difficulty })
+          })
+          .then(response => {
+            if (!response.ok) {
+              console.error(`Network response was not ok. Status: ${response.status}, Status Text: ${response.statusText}`);
+              throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            var outputDiv = document.getElementById('questions-output');
+            outputDiv.innerHTML = '<h2>Generated Questions:</h2>';
+
+            if (section === 'verbal' && data.passage) {
+              outputDiv.innerHTML += `<p><strong>Passage:</strong> ${data.passage}</p>`;
+              data.questions.forEach((questionObj, index) => {
+                outputDiv.innerHTML += `<p><strong>Question ${index + 1}:</strong> ${questionObj.question}</p>`;
+                outputDiv.innerHTML += '<ul>';
+                questionObj.choices.forEach((choice, idx) => {
+                  outputDiv.innerHTML += `<li>${choice}</li>`;
+                });
+                outputDiv.innerHTML += '</ul>';
+                outputDiv.innerHTML += `<p class="answer"><strong>Answer:</strong> ${questionObj.answer}</p>`;
+              });
+            } else if (Array.isArray(data)) {
+              data.forEach((questionObj, index) => {
+                outputDiv.innerHTML += `<p><strong>Question ${index + 1}:</strong> ${questionObj.question}</p>`;
+                outputDiv.innerHTML += '<ul>';
+                questionObj.choices.forEach((choice, idx) => {
+                  outputDiv.innerHTML += `<li>${choice}</li>`;
+                });
+                outputDiv.innerHTML += '</ul>';
+                outputDiv.innerHTML += `<p class="answer"><strong>Answer:</strong> ${questionObj.answer}</p>`;
+              });
+            } else {
+              outputDiv.innerHTML = '<p>No questions generated.</p>';
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to generate questions. Please try again later.');
+          });
+        });
+      }
+
+      if (pdfButton) {
+        pdfButton.addEventListener('click', function () {
+          var section = document.getElementById('sections').value;
+          var difficulty = document.getElementById('difficulty').value;
+
+          fetch('/generate-pdf', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ section: section, difficulty: difficulty })
+          })
+          .then(response => {
+            if (!response.ok) {
+              console.error(`Network response was not ok. Status: ${response.status}, Status Text: ${response.statusText}`);
+              throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.blob();
+          })
+          .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = "sat_problems.pdf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to generate PDF. Please try again later.');
+          });
+        });
+      }
+
+      if (toggleAnswersButton) {
+        toggleAnswersButton.addEventListener('click', function () {
+          var answers = document.querySelectorAll('.answer');
+          answers.forEach(answer => {
+            if (answer.style.display === 'none' || answer.style.display === '') {
+              answer.style.display = 'block';
+            } else {
+              answer.style.display = 'none';
+            }
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>
