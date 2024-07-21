@@ -19,7 +19,7 @@ const openai = new OpenAIApi(configuration);
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const typeOfPerson = (
   "You are a bot that generates SAT problems. " +
@@ -62,7 +62,6 @@ async function generateSatProblems(section, difficulty) {
       ]
     });
 
-    // Extracting and parsing the response
     const responseContent = response.data.choices[0].message.content.trim();
     const res = JSON.parse(responseContent);
     if (Array.isArray(res) && res.every(q => 'question' in q && 'choices' in q && 'answer' in q)) {
