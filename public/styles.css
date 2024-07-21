@@ -1,0 +1,126 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #FFFAF0; /* Warm light peach background color */
+    color: #333;
+}
+
+/* Container */
+.container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 800px;
+    margin: 50px auto;
+}
+
+/* Header */
+h1 {
+    font-family: 'Merriweather', serif;
+    color: #333;
+    font-size: 2.5em;
+}
+
+/* Labels */
+label {
+    font-weight: bold;
+}
+
+/* Custom button styles */
+.btn-primary {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 5px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #45a049;
+}
+
+#generatePDF {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+
+#generatePDF:hover {
+    background-color: #0056b3;
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* Questions Output */
+#questions-output {
+    margin-top: 30px;
+}
+
+#questions-output h2 {
+    text-align: center;
+    color: #333;
+    font-size: 2em;
+}
+
+#questions-output p,
+#questions-output ul {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+#questions-output ul {
+    padding-left: 20px;
+}
+
+#questions-output li {
+    margin-bottom: 10px;
+}
+
+.answer {
+    display: none;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    button {
+        padding: 12px;
+        font-size: 1.1em;
+    }
+
+    #questions-output h2 {
+        font-size: 1.8em;
+    }
+
+    #questions-output p,
+    #questions-output ul {
+        font-size: 1em;
+    }
+}
