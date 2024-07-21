@@ -1,0 +1,12 @@
+{
+    "version": 2,
+    "builds": [
+      { "src": "server.js", "use": "@vercel/node" }
+    ],
+    "routes": [
+      { "src": "/generate-sat-problem", "dest": "/server.js" },
+      { "src": "/generate-pdf", "dest": "/server.js" },
+      { "src": "/(.*)", "dest": "/public/$1" }
+    ]
+  }
+  
