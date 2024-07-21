@@ -50,8 +50,7 @@ async function generateSatProblems(section, difficulty) {
       `    "question": "Generate the SAT question",\n` +
       `    "choices": ["Option A", "Option B", "Option C", "Option D"],\n` +
       `    "answer": "Correct answer"\n` +
-      `  },\n` +
-      `  ...\n` +
+      `  }\n` +
       `]`
     );
 
@@ -63,7 +62,9 @@ async function generateSatProblems(section, difficulty) {
       ]
     });
 
-    const res = JSON.parse(response.data.choices[0].message.content);
+    // Extracting and parsing the response
+    const responseContent = response.data.choices[0].message.content.trim();
+    const res = JSON.parse(responseContent);
     if (Array.isArray(res) && res.every(q => 'question' in q && 'choices' in q && 'answer' in q)) {
       return res;
     } else {
