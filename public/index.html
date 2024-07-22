@@ -13,7 +13,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Prep SAT</h1>
+    <h1><i class="fas fa-book"></i> Prep SAT</h1>
     <form id="generateForm">
       <div class="form-group">
         <label for="sections">Section:</label>
@@ -30,26 +30,29 @@
           <option value="hard">Hard</option>
         </select>
       </div>
-      <button type="submit" class="button-85">Generate SAT Problems</button>
+      <button type="submit" class="button-85"><i class="fas fa-cogs"></i> Generate SAT Problems</button>
     </form>
 
-    <button id="generatePDF" class="button-85 mt-2">Generate PDF</button>
-    <button id="toggleAnswers" class="button-85 mt-2"> Answers</button>
+    <button id="generatePDF" class="button-85 mt-2"><i class="fas fa-file-pdf"></i> Generate PDF</button>
+    <button id="toggleAnswers" class="button-85 mt-2"><i class="fas fa-eye"></i> Toggle Answers</button>
 
     <div id="questions-output" class="output-container mt-4"></div>
+    <div id="loading" class="loading-spinner" style="display: none;">
+      <i class="fas fa-spinner fa-spin"></i> Generating...
+    </div>
   </div>
-
-
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       var generateForm = document.getElementById('generateForm');
       var pdfButton = document.getElementById('generatePDF');
       var toggleAnswersButton = document.getElementById('toggleAnswers');
+      var loadingSpinner = document.getElementById('loading');
 
       if (generateForm) {
         generateForm.addEventListener('submit', function (event) {
           event.preventDefault(); // Prevent the default form submission
+          loadingSpinner.style.display = 'block';
 
           var section = document.getElementById('sections').value;
           var difficulty = document.getElementById('difficulty').value;
@@ -62,6 +65,7 @@
             body: JSON.stringify({ section: section, difficulty: difficulty })
           })
           .then(response => {
+            loadingSpinner.style.display = 'none';
             if (!response.ok) {
               console.error(`Network response was not ok. Status: ${response.status}, Status Text: ${response.statusText}`);
               throw new Error(`Network response was not ok: ${response.statusText}`);
@@ -97,6 +101,7 @@
 
       if (pdfButton) {
         pdfButton.addEventListener('click', function () {
+          loadingSpinner.style.display = 'block';
           var section = document.getElementById('sections').value;
           var difficulty = document.getElementById('difficulty').value;
 
@@ -108,6 +113,7 @@
             body: JSON.stringify({ section: section, difficulty: difficulty })
           })
           .then(response => {
+            loadingSpinner.style.display = 'none';
             if (!response.ok) {
               console.error(`Network response was not ok. Status: ${response.status}, Status Text: ${response.statusText}`);
               throw new Error(`Network response was not ok: ${response.statusText}`);
