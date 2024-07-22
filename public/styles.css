@@ -1,32 +1,42 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #FFFAF0; /* Warm light peach background color */
+    font-family: 'Merriweather ', serif;
+    background: linear-gradient(135deg, #b993d6, #8ca6db); 
     color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
 
-/* Container */
+
 .container {
-    background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+    background-color: rgba(255, 255, 255, 0.9); 
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 30px;
     max-width: 800px;
-    margin: 50px auto;
+    width: 100%;
+    margin: 20px;
 }
 
-/* Header */
+
 h1 {
     font-family: 'Merriweather', serif;
     color: #333;
     font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Labels */
+
 label {
     font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
 }
 
-/* Custom button styles */
+
 .btn-primary {
     background-color: #4CAF50;
     border-color: #4CAF50;
@@ -52,18 +62,18 @@ label {
     background-color: #0056b3;
 }
 
-/* Footer */
+
 footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #333;
-    color: #fff;
     text-align: center;
     padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
 }
 
-/* Questions Output */
+
 #questions-output {
     margin-top: 30px;
 }
@@ -92,7 +102,7 @@ footer {
     display: none;
 }
 
-/* Responsive Design */
+
 @media (max-width: 600px) {
     .container {
         padding: 20px;

@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SAT Test Generator</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -12,29 +16,29 @@
     <form id="generateForm">
       <div class="form-group">
         <label for="sections">Section:</label>
-        <select id="sections">
+        <select id="sections" class="form-control">
           <option value="math">Math</option>
           <option value="verbal">Verbal</option>
         </select>
       </div>
       <div class="form-group">
         <label for="difficulty">Difficulty:</label>
-        <select id="difficulty">
+        <select id="difficulty" class="form-control">
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
       </div>
-      <button type="submit" class="btn-primary">Generate SAT Problems</button>
+      <button type="submit" class="btn btn-primary">Generate SAT Problems</button>
     </form>
 
-    <button id="generatePDF" class="btn-primary">Generate PDF</button>
-    <button id="toggleAnswers" class="btn-primary">Toggle Answers</button>
+    <button id="generatePDF" class="btn btn-primary mt-2">Generate PDF</button>
+    <button id="toggleAnswers" class="btn btn-secondary mt-2">Toggle Answers</button>
 
-    <div id="questions-output" class="output-container"></div>
+    <div id="questions-output" class="output-container mt-4"></div>
   </div>
 
-  <footer>
+  <footer class="text-center mt-4">
     <p>&copy; 2024 SAT Test Generator. All rights reserved.</p>
   </footer>
 
@@ -143,3 +147,4 @@
   </script>
 </body>
 </html>
+
