@@ -4,7 +4,6 @@ const { Configuration, OpenAIApi } = require('openai');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const PDFDocument = require('pdfkit');
-const fs = require('fs');
 const path = require('path');
 
 dotenv.config();
@@ -25,10 +24,11 @@ const typeOfPerson = (
   "You are a bot that generates SAT problems. " +
   "You should write answers for them as the options A, B, C, D."
 );
+
 app.use((req, res, next) => {
-    console.log(`${req.method} ${req.url}`);
-    next();
-  });
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
 
 async function generateSatProblems(section, difficulty) {
   try {
@@ -49,7 +49,6 @@ async function generateSatProblems(section, difficulty) {
       `The section is ${section} and the difficulty is ${difficulty}. ` +
       `Generate ${numQuestions} SAT problems with multiple choice answers. ` +
       `Please return your response in JSON format as a list of questions with the following structure:\n` +
-      `Please make it as in REAL DIGITAL SAT WITH 100% of  Correct answers`+
       `[\n` +
       `  {\n` +
       `    "question": "Generate the SAT question",\n` +
@@ -75,7 +74,7 @@ async function generateSatProblems(section, difficulty) {
       throw new Error("Incomplete response from OpenAI");
     }
   } catch (error) {
-    console.error(`Error generating SAT problems: ${error}`);
+    console.error(`Error generating SAT problems: ${error.message}`);
     throw error;
   }
 }
@@ -91,6 +90,7 @@ app.post('/generate-sat-problem', async (req, res) => {
     const problems = await generateSatProblems(section, difficulty);
     res.status(200).json(problems);
   } catch (error) {
+    console.error(`Error in /generate-sat-problem: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });
@@ -100,14 +100,18 @@ app.post('/generate-pdf', async (req, res) => {
     const { section, difficulty } = req.body;
 
     if (!section || !difficulty) {
+      console.error("Section and difficulty are required");
       return res.status(400).json({ error: "Section and difficulty are required" });
     }
 
+    console.log(`Generating SAT problems for section: ${section}, difficulty: ${difficulty}`);
     const problems = await generateSatProblems(section, difficulty);
 
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename=sat_problems.pdf');
+
     const doc = new PDFDocument();
-    const filePath = path.join(__dirname, 'sat_problems.pdf');
-    doc.pipe(fs.createWriteStream(filePath));
+    doc.pipe(res);
 
     doc.fontSize(16).text(`SAT ${section.charAt(0).toUpperCase() + section.slice(1)} Problems - ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Difficulty`, { align: 'center' });
     doc.moveDown();
@@ -123,13 +127,8 @@ app.post('/generate-pdf', async (req, res) => {
 
     doc.end();
 
-    res.download(filePath, 'sat_problems.pdf', (err) => {
-      if (err) {
-        console.error(`Error sending PDF file: ${err}`);
-        res.status(500).json({ error: "Failed to generate PDF" });
-      }
-    });
   } catch (error) {
+    console.error(`Error in /generate-pdf: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });
