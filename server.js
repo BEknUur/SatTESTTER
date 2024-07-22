@@ -49,10 +49,11 @@ async function generateSatProblems(section, difficulty) {
       `The section is ${section} and the difficulty is ${difficulty}. ` +
       `Generate ${numQuestions} SAT problems with multiple choice answers. ` +
       `Please return your response in JSON format as a list of questions with the following structure:\n` +
+      `Please make it as in REAL DIGITAL SAT WITH REALLY Correct answers`+
       `[\n` +
       `  {\n` +
       `    "question": "Generate the SAT question",\n` +
-      `    "choices": ["Option A", "Option B", "Option C", "Option D"],\n` +
+      `    "choices": ["A", "B", "C", "D"],\n` +
       `    "answer": "Correct answer"\n` +
       `  }\n` +
       `]`
