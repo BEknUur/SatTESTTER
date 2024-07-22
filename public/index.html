@@ -3,37 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SAT Test Generator</title>
+  <title>Prep SAT</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
   <div class="container">
-    <h1>SAT Test Generator</h1>
+    <h1>Prep SAT</h1>
     <form id="generateForm">
-      <label for="sections">Section:</label>
-      <div class="select-wrapper">
-        <select id="sections" class="styled-select">
+      <div class="form-group">
+        <label for="sections">Section:</label>
+        <select id="sections" class="form-control">
           <option value="math">Math</option>
           <option value="verbal">Verbal</option>
         </select>
       </div>
-      <label for="difficulty">Difficulty:</label>
-      <div class="select-wrapper">
-        <select id="difficulty" class="styled-select">
+      <div class="form-group">
+        <label for="difficulty">Difficulty:</label>
+        <select id="difficulty" class="form-control">
           <option value="easy">Easy</option>
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
       </div>
-      <button type="submit" class="button-81">Generate SAT Problems</button>
+      <button type="submit" class="button-85">Generate SAT Problems</button>
     </form>
 
-    <button id="generatePDF" class="button-81">Generate PDF</button>
-    <button id="toggleAnswers" class="button-81">Toggle Answers</button>
+    <button id="generatePDF" class="button-85 mt-2">Generate PDF</button>
+    <button id="toggleAnswers" class="button-85 mt-2"> Answers</button>
 
-    <div id="questions-output" class="output-container"></div>
+    <div id="questions-output" class="output-container mt-4"></div>
   </div>
+
+
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -43,7 +49,7 @@
 
       if (generateForm) {
         generateForm.addEventListener('submit', function (event) {
-          event.preventDefault();
+          event.preventDefault(); // Prevent the default form submission
 
           var section = document.getElementById('sections').value;
           var difficulty = document.getElementById('difficulty').value;
@@ -66,26 +72,17 @@
             var outputDiv = document.getElementById('questions-output');
             outputDiv.innerHTML = '<h2>Generated Questions:</h2>';
 
-            if (section === 'verbal' && data.passage) {
-              outputDiv.innerHTML += `<p><strong>Passage:</strong> ${data.passage}</p>`;
-              data.questions.forEach((questionObj, index) => {
-                outputDiv.innerHTML += `<p><strong>Question ${index + 1}:</strong> ${questionObj.question}</p>`;
-                outputDiv.innerHTML += '<ul>';
-                questionObj.choices.forEach((choice, idx) => {
-                  outputDiv.innerHTML += `<li>${choice}</li>`;
-                });
-                outputDiv.innerHTML += '</ul>';
-                outputDiv.innerHTML += `<p class="answer"><strong>Answer:</strong> ${questionObj.answer}</p>`;
-              });
-            } else if (Array.isArray(data)) {
+            if (Array.isArray(data)) {
               data.forEach((questionObj, index) => {
-                outputDiv.innerHTML += `<p><strong>Question ${index + 1}:</strong> ${questionObj.question}</p>`;
-                outputDiv.innerHTML += '<ul>';
-                questionObj.choices.forEach((choice, idx) => {
-                  outputDiv.innerHTML += `<li>${choice}</li>`;
-                });
-                outputDiv.innerHTML += '</ul>';
-                outputDiv.innerHTML += `<p class="answer"><strong>Answer:</strong> ${questionObj.answer}</p>`;
+                outputDiv.innerHTML += `
+                  <div class="question">
+                    <p><strong>Question ${index + 1}:</strong> ${questionObj.question}</p>
+                    <ul>
+                      ${questionObj.choices.map(choice => `<li>${choice}</li>`).join('')}
+                    </ul>
+                    <p class="answer"><strong>Answer:</strong> ${questionObj.answer}</p>
+                  </div>
+                `;
               });
             } else {
               outputDiv.innerHTML = '<p>No questions generated.</p>';

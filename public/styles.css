@@ -1,144 +1,182 @@
 
-body {
-    font-family: 'Lato', serif;
-    background: linear-gradient(135deg, #b993d6, #8ca6db);
-    color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-.container {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    max-width: 800px;
-    width: 90%;
-    margin: 20px;
-}
-
-h1 {
-    font-family: 'Merriweather', serif;
-    color: #333;
-    font-size: 2.5em;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.styled-select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    background-color: #fff;
-    font-size: 16px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-.button-81 {
-  background-color: #fff;
-  border: 0 solid #e2e8f0;
-  border-radius: 1.5rem;
-  box-sizing: border-box;
-  color: #0d172a;
-  cursor: pointer;
-  display: inline-block;
-  font-family: "Basier circle",-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1;
-  padding: 1rem 1.6rem;
-  text-align: center;
-  text-decoration: none #0d172a solid;
-  text-decoration-thickness: auto;
-  transition: all .1s cubic-bezier(.4, 0, .2, 1);
-  box-shadow: 0px 1px 2px rgba(166, 175, 195, 0.25);
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  margin-top: 10px;
-}
-
-.button-81:hover {
-  background-color: #1e293b;
-  color: #fff;
-}
-
-@media (min-width: 768px) {
-  .button-81 {
-    font-size: 1.125rem;
-    padding: 1rem 2rem;
-  }
-}
-
-.output-container {
-    margin-top: 30px;
-}
-
-.output-container h2 {
-    text-align: center;
-    color: #333;
-    font-size: 2em;
-    margin-bottom: 20px;
-}
-
-.output-container p,
-.output-container ul {
-    font-size: 1.1em;
-    margin-bottom: 20px;
-}
-
-.output-container ul {
-    padding-left: 20px;
-}
-
-.output-container li {
-    margin-bottom: 10px;
-}
-
-.answer {
-    display: none;
-}
-
-@media (max-width: 600px) {
-    .container {
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #b993d6 0%, #8ca6db 100%);
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
         padding: 20px;
     }
-
+    
+    /* Container */
+    .container {
+        background-color: rgba(255, 255, 255, 0.9); /* Slight transparency */
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        max-width: 800px;
+        width: 100%;
+        margin: 20px;
+    }
+    
+    /* Header */
     h1 {
+        font-family: 'Merriweather', serif;
+        color: #333;
+        font-size: 2.5em;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    /* Labels */
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    /* Form spacing */
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    /* Custom button styles */
+    .button-85 {
+      padding: 0.8em 2.5em; /* Increased padding for better readability */
+      border: none;
+      outline: none;
+      color: rgb(255, 255, 255);
+      background: #111;
+      cursor: pointer;
+      position: relative;
+      z-index: 0;
+      border-radius: 10px;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      font-size: 1em; /* Increased font size */
+    }
+    
+    .button-85:before {
+      content: "";
+      background: linear-gradient(
+        45deg,
+        #ff0000,
+        #ff7300,
+        #fffb00,
+        #48ff00,
+        #00ffd5,
+        #002bff,
+        #7a00ff,
+        #ff00c8,
+        #ff0000
+      );
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      background-size: 200%;
+      z-index: -1;
+      filter: blur(5px);
+      -webkit-filter: blur(5px);
+      width: calc(100% + 4px);
+      height: calc(100% + 4px);
+      animation: glowing-button-85 20s linear infinite;
+      transition: opacity 0.3s ease-in-out;
+      border-radius: 10px;
+    }
+    
+    @keyframes glowing-button-85 {
+      0% {
+        background-position: 0 0;
+      }
+      50% {
+        background-position: 200% 0;
+      }
+      100% {
+        background-position: 0 0;
+      }
+    }
+    
+    .button-85:after {
+      z-index: -1;
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #222;
+      left: 0;
+      top: 0;
+      border-radius: 10px;
+    }
+    
+
+    
+    /* Questions Output */
+    #questions-output {
+        margin-top: 30px;
+    }
+    
+    #questions-output h2 {
+        text-align: center;
+        color: #333;
         font-size: 2em;
     }
-
-    .form-row {
-        flex-direction: column;
+    
+    #questions-output .question {
+        background: rgba(255, 255, 255, 0.8);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
-
-    .form-group {
-        width: 100%;
-    }
-
-    button {
-        padding: 12px;
+    
+    #questions-output p,
+    #questions-output ul {
         font-size: 1.1em;
+        margin-bottom: 10px;
     }
-
-    .output-container h2 {
-        font-size: 1.8em;
+    
+    #questions-output ul {
+        padding-left: 20px;
     }
-
-    .output-container p,
-    .output-container ul {
-        font-size: 1em;
+    
+    #questions-output li {
+        margin-bottom: 5px;
     }
-}
+    
+    .answer {
+        display: none;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        .container {
+            padding: 20px;
+        }
+    
+        h1 {
+            font-size: 2em;
+        }
+    
+        .form-group {
+            width: 100%;
+        }
+    
+        button {
+            padding: 12px;
+            font-size: 1.1em;
+        }
+    
+        #questions-output h2 {
+            font-size: 1.8em;
+        }
+    
+        #questions-output p,
+        #questions-output ul {
+            font-size: 1em;
+        }
+    }
+    
